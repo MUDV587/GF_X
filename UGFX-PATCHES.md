@@ -33,6 +33,7 @@
 - **构建管线**：AppBuilder 面板与执行服务不再反射 UGF 私有 `Type.GetConfigurationPath<T>` / `ResourceEditor.Open()`，改用 fork 公开 API（UGF fork 补丁 #12 / #13）；`BuildPlayerLaunchService` 加 `#if UNITY_2022_3_OR_NEWER` 守护 + 反射失败逐项诊断日志 + 异常捕获（E3-B；E3-A 后续用 `BuildPipeline.BuildPlayer` 重写）。
 - **AppConfigs Inspector**：新增 `Validate Procedures` 按钮（`GameFramework.Utility.Assembly.GetType` 解析 + `ProcedureBase` 子类校验，一键报告缺失/非流程类型）。
 - **子工具注册表**：`AssetSelectionSubToolRegistry` 的 `Assembly.GetTypes()` 包裹 try/catch + 过滤 null（单个损坏程序集不炸编辑器 reload）；`Utility.Assembly.Assembly.GetTypes()` 在核包 fork 加容错（核包补丁 #10）。
+- **TextureCompressionEditorBridge**：文件头标注 Unity 内部 API 清单 + 三个反射调用逐一 try/catch（失败记 Error 并走 fallback/跳过）——`TextureImportValidFormats`/`TextureImporter.GetImportWarnings`/`TextureUtil.GetStorageMemorySizeLong` 均无公开替代，Unity 升级时按此清单重测。
 - **RootCanvas 空值保护**：未找到根 Canvas 时记错并跳过 UICamera/CanvasScaler 初始化（原实现直接 NRE）。
 
 ### 与上游合并注意

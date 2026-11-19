@@ -6,6 +6,12 @@ using UnityEngine;
 
 namespace UGF.EditorTools
 {
+    // ── Unity 引擎内部 API（Editor 私有实现，截至 Unity 2022.3.62f1 验证可用）─────────────
+    //   UnityEditor.TextureImportValidFormats.GetPlatformTextureFormatValuesAndStrings
+    //   TextureImporter.GetImportWarnings（实例私有方法）
+    //   UnityEditor.TextureUtil.GetStorageMemorySizeLong
+    // 均无公开替代；Unity 升级后若签名/类型变化，这里会安静退回 fallback（已实现）。
+    // 后续如改用公开 API 彻底摆脱内部依赖（见 UGFX-PATCHES.md）。
     internal static class TextureCompressionEditorBridge
     {
         private static MethodInfo s_GetTextureFormatOptionsMethod;
@@ -22,9 +28,18 @@ namespace UGF.EditorTools
                 return;
             }
 
-            getTextureFormatOptionsMethod.Invoke(null, parameters);
-            formatValues = parameters[2] as int[];
-            formatDisplayOptions = parameters[3] as string[];
+            try
+            {
+                getTextureFormatOptionsMethod.Invoke(null, parameters);
+                formatValues = parameters[2] as int[];
+                formatDisplayOptions = parameters[3] as string[];
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[TextureCompressionEditorBridge] GetPlatformTextureFormatValuesAndStrings 调用失败（Unity 内部 API，可能随版本升级变化）：{e.Message}，将使用 fallback 格式列表。当前 Unity：{Application.unityVersion}");
+                formatValues = null;
+                formatDisplayOptions = null;
+            }
             if (formatValues == null || formatDisplayOptions == null)
             {
                 UseFallbackTextureFormats(out formatValues, out formatDisplayOptions);
@@ -40,7 +55,15 @@ namespace UGF.EditorTools
                 return false;
             }
 
-            warning = getImportWarningsMethod.Invoke(textureImporter, null) as string;
+            try
+            {
+                warning = getImportWarningsMethod.Invoke(textureImporter, null) as string;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[TextureCompressionEditorBridge] GetImportWarnings 调用失败：{e.Message}，跳过警告检查。");
+                warning = string.Empty;
+            }
             return !string.IsNullOrWhiteSpace(warning);
         }
 
@@ -53,8 +76,17 @@ namespace UGF.EditorTools
                 return false;
             }
 
-            storageSize = (long)getStorageMemorySizeLongMethod.Invoke(null, new object[] { texture });
-            return true;
+            try
+            {
+                storageSize = (long)getStorageMemorySizeLongMethod.Invoke(null, new object[] { texture });
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[TextureCompressionEditorBridge] GetStorageMemorySizeLong 调用失败：{e.Message}");
+                storageSize = 0L;
+                return false;
+            }
         }
 
         private static MethodInfo GetTextureFormatOptionsMethod()
