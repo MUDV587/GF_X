@@ -14,7 +14,7 @@ namespace UGF.EditorTools
         private const string ImageFontAiTempDir = "Library/ImageFontAiGenerate";
         // 提示词模板包路径（框架自带只读）
         private const string ImageFontAiGeneratePromptRelativePath =
-            "Packages/com.final5788.ugfx/Editor/Tools/Batch/ImageFontAtlasGeneratePrompt.md";
+            ConstEditor.PackageRoot + "/Editor/Tools/Batch/ImageFontAtlasGeneratePrompt.md";
 
         public string DefaultImageFontTargetDir = "Assets/GF_X/Sprites/ImageFonts";
 

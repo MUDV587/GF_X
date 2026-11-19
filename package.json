@@ -19,6 +19,13 @@
     "type": "git",
     "url": "https://github.com/MUDV587/GF_X.git"
   },
+  "samples": [
+    {
+      "displayName": "Getting Started [设置三件套]",
+      "description": "GFRuntimeSettings / AppSettings / AppConfigs 三件套（本工程示例配置）+ 接线说明",
+      "path": "Samples~/GettingStarted"
+    }
+  ],
   "dependencies": {
     "com.jiangyin.gameframework": "2025.7.10",
     "com.jiangyin.unitygameframework": "2025.7.10",

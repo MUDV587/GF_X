@@ -15,7 +15,7 @@
 ## 快速开始
 
 1. 安装 HybridCLR 环境：菜单 `HybridCLR → Installer`；
-2. Package Manager 导入本包 `Getting Started` sample（或手工拷贝 `Samples~/GettingStarted/` 里的三个 .asset）；
+2. Package Manager 导入本包 `Getting Started` sample（含 GFRuntimeSettings / AppSettings / AppConfigs 三件套）；
 3. `Assets/Resources/GFRuntimeSettings.asset`：`GameRoot` 指向你的业务根（如 `Assets/YourGame`，目录布局是框架约定，见包内注释）；
 4. 场景内放置 `GameFramework` 预制体实例 + BuiltinViews（Loading 进度条 + Tips 对话框），并挂 `GF_X` 组件；
 5. 菜单 `Game Framework/GF Tools/工具箱` 打开工具箱；首次打热更前先 `Build App` 一键出包。

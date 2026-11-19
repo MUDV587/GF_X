@@ -18,7 +18,7 @@ namespace UGF.EditorTools
         public const string Netstandard2NetFrameworkDir = "Assets/Netstandard2NetFramework";
         /// <summary>Unity 识别的固定 link.xml 锚点（不可随 GameRoot 迁移）。</summary>
         public const string UnityLinkXmlPath = "Assets/link.xml";
-        private const string PackageRuntimeRoot = "Packages/com.final5788.ugfx/Runtime";
+        private const string PackageRuntimeRoot = ConstEditor.PackageRoot + "/Runtime";
         private const string FrameworkConfigsRoot = "Assets/GameFramework/Configs";
         private const string ToolsJenkinsDir = "Tools/Jenkins";
         private const string EditorScriptableObjectsRoot = "Assets/GF_X_Editor/Settings";

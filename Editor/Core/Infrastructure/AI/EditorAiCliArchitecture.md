@@ -20,7 +20,7 @@ Business modules are responsible for:
 
 Location:
 
-- `Packages/com.final5788.ugfx/Editor/Core/AI/`
+- `Packages/com.final5788.ugfx/Editor/Core/AI/`（注：Phase 2 起路径收敛为 `ConstEditor.PackageRoot`）
 
 Responsibilities:
 

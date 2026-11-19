@@ -2,7 +2,6 @@
 using UnityEngine;
 using GameFramework;
 using UnityGameFramework.Runtime;
-using DG.Tweening;
 using UnityEngine.UI;
 using TMPro;
 

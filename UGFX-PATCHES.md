@@ -36,6 +36,14 @@
 - **TextureCompressionEditorBridge**：文件头标注 Unity 内部 API 清单 + 三个反射调用逐一 try/catch（失败记 Error 并走 fallback/跳过）——`TextureImportValidFormats`/`TextureImporter.GetImportWarnings`/`TextureUtil.GetStorageMemorySizeLong` 均无公开替代，Unity 升级时按此清单重测。
 - **RootCanvas 空值保护**：未找到根 Canvas 时记错并跳过 UICamera/CanvasScaler 初始化（原实现直接 NRE）。
 
+### Phase 2（Boot 拆分 + 工程化收敛，2026-11-19）
+
+- **Boot 拆程序集**：`GF_X` 门面、Launch/UpdateResources/LoadHotfixDll Procedures、`BuiltinViewComponent`、`HotfixRuntimeInitializer`、`LoadHotfixDllEventArgs` 拆出 `GF_X.Runtime` → 新程序集 `GF_X.Boot`（`Runtime/Boot/`，依赖：GF_X.Runtime + GameFramework + UGF.Runtime + HybridCLR.Runtime + Obfuz.Runtime + TMP）；`Hotfix.asmdef`、`HybridCLRSettings.patchAOTAssemblies`、`Obfuz.asset`、`Assets/link.xml`、测试不变式（AotAssemblyLoadTests / AssemblyInvariantsTests / HotUpdateSettingsTests）全部同步。
+- **AppSettings Runtime 无 UnityEditor 依赖**：内嵌 `#if UNITY_EDITOR` Inspector（`AppSettinsInspector`，含反射 → fork `UIComponent.InstanceRoot`）迁出到 `Editor/Core/Config/AppSettingsInspector.cs`（类名重命名为 `AppSettingsInspector`）。
+- **硬编码包路径收敛为单一常量**：`ConstEditor.PackageRoot = "Packages/com.final5788.ugfx"`；全部实现方（`AppBuilderEditorSettings.PackageRuntimeRoot`、`GameDataShared.DataTableCodeTemplateRelativePath`、`GameDataSettings.PackageRootPath`、`LocalizationSettings.DefaultPromptTemplate`、`ArtFontSettings.ImageFontAiGeneratePromptRelativePath`、`AppConfigsEditorNavigationService`）派生自该常量——包名若再变只改一处。
+- **Samples~**：`Samples~/GettingStarted/` 随包携带「设置三件套」（本工程示例拷贝：GFRuntimeSettings / AppSettings / AppConfigs，文件 GUID 重生成避免冲突，m_Script 指 package 类 GUID 不变）+ 接线说明；package.json 已注册 sample。
+- **`GF_X.Editor` 聚合程序集 `autoReferenced: false`**：框架编辑器内部类默认不可见于工程其他程序集（Hotfix.Editor 等显式引用仍有效）。
+
 ### 与上游合并注意
 
 1. 先同步 `master`（ff-only），再 `master → feature-optimize` 合并；

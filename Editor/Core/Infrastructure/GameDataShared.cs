@@ -21,7 +21,7 @@ namespace UGF.EditorTools
         public const string ENABLE_OBFUZ = "ENABLE_OBFUZ";
         // 框架约定常量（DataTable 域与 GameData 域共享，避免跨程序集引用设置）
         public const string DataTableCodeTemplateRelativePath =
-            "Packages/com.final5788.ugfx/Editor/Data/DataTable/Templates/DataTableCodeTemplate/DataTableCodeTemplate.txt";
+            ConstEditor.PackageRoot + "/Editor/Data/DataTable/Templates/DataTableCodeTemplate/DataTableCodeTemplate.txt";
         public const string DefaultGeneratedDataTableDir = "Assets/GF_X/Scripts/Runtime/Generated/DataTable";
 
         public static readonly Encoding Utf8NoBom = new UTF8Encoding(false, true);

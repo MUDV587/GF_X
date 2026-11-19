@@ -9,7 +9,7 @@ namespace UGF.EditorTools
     {
         internal static void OpenConstEditorScript()
         {
-            var scriptGuids = AssetDatabase.FindAssets("ConstEditor t:Script", new[] { "Packages/com.final5788.ugfx/Editor" });
+            var scriptGuids = AssetDatabase.FindAssets("ConstEditor t:Script", new[] { ConstEditor.PackageRoot + "/Editor" });
             if (scriptGuids == null || scriptGuids.Length == 0)
             {
                 Debug.LogWarning("Open ConstEditor failed: script asset was not found.");

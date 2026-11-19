@@ -26,7 +26,7 @@ namespace UGF.EditorTools
         [Tooltip("框架自动生成 C# 文件的根目录（工程相对）")] public string GeneratedCodeRoot = "Assets/GF_X/Scripts/Runtime/Generated";
 
         // ── 包根（只读预览）
-        private const string PackageRootPath = "Packages/com.final5788.ugfx";
+        private const string PackageRootPath = ConstEditor.PackageRoot;
         private const string UITemplatesDir = "UI/Templates";
 
         public string PackageRoot => PackageRootPath;

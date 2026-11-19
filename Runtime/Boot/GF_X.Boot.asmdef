@@ -1,0 +1,21 @@
+{
+  "name": "GF_X.Boot",
+  "rootNamespace": "",
+  "references": [
+    "GF_X.Runtime",
+    "GameFramework",
+    "UnityGameFramework.Runtime",
+    "HybridCLR.Runtime",
+    "Obfuz.Runtime",
+    "Unity.TextMeshPro"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

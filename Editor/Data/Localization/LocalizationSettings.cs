@@ -19,7 +19,7 @@ namespace UGF.EditorTools
         private const string LocalizationScannerToolName = "LocalizationCodeScanner";
 #endif
         private const string DefaultPromptTemplate =
-            "Packages/com.final5788.ugfx/Editor/Data/Localization/AIPrompts/LocalizationTranslatePrompt.md";
+            ConstEditor.PackageRoot + "/Editor/Data/Localization/AIPrompts/LocalizationTranslatePrompt.md";
 
         // ── 语言
         public List<int> LanguagesSupport = new List<int>();
