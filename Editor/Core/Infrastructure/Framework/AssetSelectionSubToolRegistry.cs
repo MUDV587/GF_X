@@ -19,7 +19,22 @@ namespace UGF.EditorTools
             _panelTypes.Clear();
 
             var editorAssembly = ownerType.Assembly;
-            foreach (var type in editorAssembly.GetTypes())
+            Type[] types;
+            try
+            {
+                types = editorAssembly.GetTypes();
+            }
+            catch (ReflectionTypeLoadException e)
+            {
+                // 部分类型加载失败时过滤 null 继续扫描，避免炸掉整个编辑器 reload
+                types = Array.FindAll(e.Types, t => t != null);
+            }
+            catch (Exception e)
+            {
+                UnityEngine.Debug.LogError($"AssetSelectionSubToolRegistry: 扫描程序集 {editorAssembly.GetName().Name} 失败：{e}");
+                return;
+            }
+            foreach (var type in types)
             {
                 if (!type.IsClass || type.IsAbstract || !type.IsSubclassOf(typeof(TPanel)))
                 {

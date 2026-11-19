@@ -9,7 +9,7 @@ namespace UGF.EditorTools
     /// 游戏数据域设置（ProjectSettings/GameFrameworkX/GameDataSettings.asset）。
     /// 持有：Excel 根路径、生成代码/数据表路径、Unity.Languages 输出。
     /// </summary>
-    [FilePath("ProjectSettings/GameFrameworkX/GameDataSettings.asset")]
+    [FilePath("ProjectSettings/GameFrameworkX/GameDataSettings.asset", FilePathAttribute.Location.ProjectFolder)]
     public class GameDataSettings : EditorScriptableSingleton<GameDataSettings>
     {
         private const string DefaultDataTablesExcelRoot = "GF_X/DataTables";

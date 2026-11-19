@@ -9,7 +9,7 @@ namespace UGF.EditorTools
     /// 构建域设置（ProjectSettings/GameFrameworkX/AppBuilderEditorSettings.asset）。
     /// 汇集一切打包/打热更/资源构建/Jenkins CI 所需路径与参数；跨工具参数见各自 SO。
     /// </summary>
-    [FilePath("ProjectSettings/GameFrameworkX/AppBuilderEditorSettings.asset")]
+    [FilePath("ProjectSettings/GameFrameworkX/AppBuilderEditorSettings.asset", FilePathAttribute.Location.ProjectFolder)]
     public class AppBuilderEditorSettings : UGF.EditorTools.EditorScriptableSingleton<AppBuilderEditorSettings>
     {
         public const string DefaultResourceBuildDir = "AssetBundles";

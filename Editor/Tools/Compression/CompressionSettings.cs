@@ -8,7 +8,7 @@ namespace UGF.EditorTools
     /// 压缩工具设置（ProjectSettings/GameFrameworkX/CompressionSettings.asset）。
     /// 数据持有：图片/动画文件压缩、Atlas/Texture 处理参数。
     /// </summary>
-    [FilePath("ProjectSettings/GameFrameworkX/CompressionSettings.asset")]
+    [FilePath("ProjectSettings/GameFrameworkX/CompressionSettings.asset", FilePathAttribute.Location.ProjectFolder)]
     public class CompressionSettings : EditorScriptableSingleton<CompressionSettings>
     {
         private const string CompressImageToolsDir = "CompressImageTools";

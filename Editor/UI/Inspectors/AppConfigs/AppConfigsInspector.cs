@@ -77,6 +77,10 @@ namespace UGF.EditorTools
                 {
                     AppConfigsGameDataActions.ValidatePaths();
                 }
+                if (GUILayout.Button("Validate Procedures", GUILayout.Height(30)))
+                {
+                    ValidateProcedures();
+                }
                 if (GUILayout.Button("Export All", GUILayout.Height(30)))
                 {
                     SaveConfig();
@@ -147,6 +151,41 @@ namespace UGF.EditorTools
             }
 
             AppConfigsSaveService.Save(serializedObject, dataTables, configs, languages, procedureView.GetSelectedItems());
+        }
+
+        private void ValidateProcedures()
+        {
+            var appConfigs = target as AppConfigs;
+            var procedures = appConfigs?.Procedures ?? new string[0];
+            var invalid = new System.Collections.Generic.List<string>();
+            var report = new System.Text.StringBuilder();
+            for (int i = 0; i < procedures.Length; i++)
+            {
+                var name = procedures[i];
+                var type = GameFramework.Utility.Assembly.GetType(name);
+                if (type == null)
+                {
+                    invalid.Add(name);
+                    report.AppendLine($"[缺失] {name}：未找到类型（可能拼写错误，或程序集未加载）");
+                    continue;
+                }
+                if (!typeof(GameFramework.Procedure.ProcedureBase).IsAssignableFrom(type))
+                {
+                    invalid.Add(name);
+                    report.AppendLine($"[非流程] {name}：不是 ProcedureBase 子类");
+                    continue;
+                }
+                report.AppendLine($"[OK] {name}");
+            }
+
+            if (invalid.Count == 0)
+            {
+                EditorUtility.DisplayDialog("Validate Procedures", $"{procedures.Length} 个流程类型全部可解析：\n{report}", "OK");
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("Validate Procedures - 失败", $"{invalid.Count} 个无效配置：\n{report}", "OK");
+            }
         }
 
         private void ReloadScrollView(AppConfigs cfg)

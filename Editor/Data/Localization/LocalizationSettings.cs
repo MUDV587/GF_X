@@ -9,7 +9,7 @@ namespace UGF.EditorTools
     /// 本地化工具设置（ProjectSettings/GameFrameworkX/LocalizationSettings.asset）。
     /// 数据持有：语言/翻译/AI Prompt 模板/扫描输出路径。
     /// </summary>
-    [FilePath("ProjectSettings/GameFrameworkX/LocalizationSettings.asset")]
+    [FilePath("ProjectSettings/GameFrameworkX/LocalizationSettings.asset", FilePathAttribute.Location.ProjectFolder)]
     public class LocalizationSettings : EditorScriptableSingleton<LocalizationSettings>
     {
 #if UNITY_EDITOR_WIN

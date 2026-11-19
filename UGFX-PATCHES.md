@@ -29,8 +29,10 @@
 ### 功能修复/重构（含 T10 与 Phase 1）
 
 - **命名统一**（T9/T10）：`GF_X_RuntimeSettings` → `GFRuntimeSettings`；`GF_X_EditorSettings` / `AppBuilderEditorSettings` → **合并为 `AppBuilderEditorSettings`**（嵌套序列化 SO、`[FilePath("ProjectSettings/GameFrameworkX/AppBuilderEditorSettings.asset")]`）；`GFBuiltin` → `GF_X`；`UtilityBuiltin` → `GFUtility`；`GFHelper` → `Helpers/`；`ScriptableObject/` → `ScriptableObjects/`。
-- **反射消除**：`GF_X.cs` 不再反射 `ResourceComponent.m_ResourceMode`，改在 `Start()` 中调用公开 `SetResourceMode`；AppSettings Inspector 不再反射 `UIComponent.m_InstanceRoot`，改用 fork 新增的 `UIComponent.InstanceRoot`（见 UGF fork `GF_X-PATCHES.md` 补丁 #11）；`EditorScriptableSingleton` 走 Unity 公开 `ScriptableSingleton<T>`（待 Phase 2 执行，如仍存在 `InternalEditorUtility` 调用则移除）。
-- **构建管线**：AppBuilder 面板与执行服务不再反射 UGF 私有 `Type.GetConfigurationPath<T>` / `ResourceEditor.Open()`，改用 fork 公开 API（UGF fork 补丁 #12 / #13）；`BuildPlayerLaunchService` 加 `#if UNITY_2022_3_OR_NEWER` 守护（Unity 私有 API，后续 E3-A 专项用 `BuildPipeline.BuildPlayer` 重写）。
+- **反射消除**：`GF_X.cs` 不再反射 `ResourceComponent.m_ResourceMode`，改在 `Start()` 中调用公开 `SetResourceMode`；AppSettings Inspector 不再反射 `UIComponent.m_InstanceRoot`，改用 fork 新增的 `UIComponent.InstanceRoot`（见 UGF fork `GF_X-PATCHES.md` 补丁 #11）；`EditorScriptableSingleton` 改为包装 Unity 公开的 `ScriptableSingleton<T>`（替代 `InternalEditorUtility.LoadSerializedFileAndForget` 私有 API），5 个设置类 `[FilePath]` 标注补 `FilePathAttribute.Location.ProjectFolder`。
+- **构建管线**：AppBuilder 面板与执行服务不再反射 UGF 私有 `Type.GetConfigurationPath<T>` / `ResourceEditor.Open()`，改用 fork 公开 API（UGF fork 补丁 #12 / #13）；`BuildPlayerLaunchService` 加 `#if UNITY_2022_3_OR_NEWER` 守护 + 反射失败逐项诊断日志 + 异常捕获（E3-B；E3-A 后续用 `BuildPipeline.BuildPlayer` 重写）。
+- **AppConfigs Inspector**：新增 `Validate Procedures` 按钮（`GameFramework.Utility.Assembly.GetType` 解析 + `ProcedureBase` 子类校验，一键报告缺失/非流程类型）。
+- **子工具注册表**：`AssetSelectionSubToolRegistry` 的 `Assembly.GetTypes()` 包裹 try/catch + 过滤 null（单个损坏程序集不炸编辑器 reload）；`Utility.Assembly.Assembly.GetTypes()` 在核包 fork 加容错（核包补丁 #10）。
 - **RootCanvas 空值保护**：未找到根 Canvas 时记错并跳过 UICamera/CanvasScaler 初始化（原实现直接 NRE）。
 
 ### 与上游合并注意

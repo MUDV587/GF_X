@@ -7,7 +7,7 @@ namespace UGF.EditorTools
     /// <summary>
     /// 美术字体工具设置（ProjectSettings/GameFrameworkX/ArtFontSettings.asset）。
     /// </summary>
-    [FilePath("ProjectSettings/GameFrameworkX/ArtFontSettings.asset")]
+    [FilePath("ProjectSettings/GameFrameworkX/ArtFontSettings.asset", FilePathAttribute.Location.ProjectFolder)]
     public class ArtFontSettings : EditorScriptableSingleton<ArtFontSettings>
     {
         private const string ImageFontAiTempDir = "Library/ImageFontAiGenerate";
