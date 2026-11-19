@@ -60,7 +60,7 @@ public static class DataTableExtension
     /// <param name="userData"></param>
     public static void LoadDataTable(this DataTableComponent dataTableComponent, string dataTableName, bool useBytes, object userData = null)
     {
-        string abTestGroup = GF_X.Setting.GetABTestGroup();
+        string abTestGroup = GameEntry.GetComponent<SettingComponent>()?.GetABTestGroup() ?? string.Empty;
         dataTableComponent.LoadDataTable(dataTableName, abTestGroup, useBytes, userData);
     }
 
@@ -70,7 +70,8 @@ public static class DataTableExtension
         if (!string.IsNullOrWhiteSpace(abTestGroupName))
         {
             var abTableFileName = Utility.Text.Format("{0}{1}{2}", dataTableName, ConstBuiltin.AB_TEST_TAG, abTestGroupName);
-            if (GF_X.Resource.HasAsset(GFUtility.AssetsPath.GetDataTablePath(abTableFileName, useBytes)) != GameFramework.Resource.HasAssetResult.NotExist)
+            var resource = GameEntry.GetComponent<ResourceComponent>();
+            if (resource != null && resource.HasAsset(GFUtility.AssetsPath.GetDataTablePath(abTableFileName, useBytes)) != GameFramework.Resource.HasAssetResult.NotExist)
             {
                 tableFileName = abTableFileName;
             }
@@ -81,7 +82,8 @@ public static class DataTableExtension
 
     public static string GetDataTableAssetName(string dataTableName, bool useBytes)
     {
-        return GetDataTableAssetName(dataTableName, GF_X.Setting.GetABTestGroup(), useBytes);
+        var setting = GameEntry.GetComponent<SettingComponent>();
+        return GetDataTableAssetName(dataTableName, setting != null ? setting.GetABTestGroup() : string.Empty, useBytes);
     }
     public static Color32 ParseColor32(string value)
     {

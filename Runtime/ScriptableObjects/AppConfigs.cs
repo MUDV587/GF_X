@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameFramework;
 using GameFramework.Resource;
+using UnityGameFramework.Runtime;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -79,7 +80,7 @@ public class AppConfigs : ScriptableObject
     private static UniTask<AppConfigs> LoadAssetAwait(string assetName)
     {
         UniTaskCompletionSource<AppConfigs> loadAssetTcs = new UniTaskCompletionSource<AppConfigs>();
-        GF_X.Resource.LoadAsset(assetName, typeof(AppConfigs), new LoadAssetCallbacks(
+        GameEntry.GetComponent<ResourceComponent>().LoadAsset(assetName, typeof(AppConfigs), new LoadAssetCallbacks(
             (tempAssetName, asset, duration, userdata) =>
             {
                 AppConfigs tAsset = asset as AppConfigs;
