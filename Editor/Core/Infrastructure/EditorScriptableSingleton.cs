@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 
 namespace UGF.EditorTools
@@ -6,10 +7,10 @@ namespace UGF.EditorTools
     /// <summary>
     /// 可持久化编辑器单例（ProjectSettings/ 下的 .asset）。
     /// 基于 Unity 公开的 ScriptableSingleton&lt;T&gt; 实现（替代 UnityEditorInternal 私有 API）。
-    /// 持久化路径通过 UnityEngine.FilePathAttribute 标注，Location 必须为 ProjectFolder：
-    /// <code>[FilePath("ProjectSettings/Xxx.asset", FilePathAttribute.Location.ProjectFolder)]</code>
+    /// 派生类仍须形如 <c>class XxxSettings : EditorScriptableSingleton&lt;XxxSettings&gt;</c>，
+    /// 并用 <c>[FilePath("ProjectSettings/Xxx.asset", FilePathAttribute.Location.ProjectFolder)]</c> 标注。
     /// </summary>
-    public abstract class EditorScriptableSingleton<T> : ScriptableSingleton<T> where T : ScriptableObject
+    public abstract class EditorScriptableSingleton<T> : ScriptableSingleton<T> where T : EditorScriptableSingleton<T>
     {
         private static T s_Instance;
 
@@ -25,6 +26,9 @@ namespace UGF.EditorTools
             }
         }
 
+        /// <summary>
+        /// 静态便捷入口（保持既有调用 <c>XxxSettings.Save()</c>）。
+        /// </summary>
         public static void Save(bool saveAsText = true)
         {
             if (!Instance)
@@ -33,7 +37,13 @@ namespace UGF.EditorTools
                 return;
             }
 
-            Instance.Save(saveAsText); // Unity 公开 API
+            Instance.SaveInstance(saveAsText);
+        }
+
+        /// <summary>实例保存实现（内部调用 Unity 公开的受保护 Save）。</summary>
+        public void SaveInstance(bool saveAsText = true)
+        {
+            base.Save(saveAsText); // 调用 Unity 公开的受保护 Save
         }
     }
 }
