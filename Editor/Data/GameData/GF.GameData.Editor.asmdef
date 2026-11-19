@@ -1,0 +1,27 @@
+﻿{
+    "name": "GF.GameData.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GF_X.Runtime",
+        "GameFramework",
+        "UnityGameFramework.Runtime",
+        "UniTask",
+        "ZString",
+        "Unity.Mathematics",
+        "Newtonsoft.Json",
+        "GF.Core.Editor",
+        "GF.DataTable.Editor",
+        "GF.LanguageExcel.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

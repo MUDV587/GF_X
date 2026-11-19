@@ -1,0 +1,23 @@
+{
+  "name": "GF_X.Runtime",
+  "rootNamespace": "",
+  "references": [
+    "Unity.TextMeshPro",
+    "UnityGameFramework.Runtime",
+    "ZString",
+    "GameFramework",
+    "UniTask",
+    "Obfuz.Runtime",
+    "HybridCLR.Runtime",
+    "Unity.Mathematics"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": true,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

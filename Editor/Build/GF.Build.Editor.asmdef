@@ -1,0 +1,31 @@
+﻿{
+    "name": "GF.Build.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GF_X.Runtime",
+        "GameFramework",
+        "UnityGameFramework.Runtime",
+        "UnityGameFramework.Editor",
+        "HybridCLR.Editor",
+        "HybridCLR.Runtime",
+        "Obfuz.Runtime",
+        "Obfuz.Editor",
+        "Obfuz4HybridCLR.Editor",
+        "UniTask",
+        "ZString",
+        "Unity.TextMeshPro",
+        "Unity.2D.Sprite.Editor",
+        "GF.Core.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

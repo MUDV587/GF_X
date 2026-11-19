@@ -1,0 +1,23 @@
+﻿{
+    "name": "GF.ImageFont.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GF_X.Runtime",
+        "GameFramework",
+        "Unity.TextMeshPro",
+        "Unity.TextMeshPro.Editor",
+        "Unity.2D.Sprite.Editor",
+        "GF.Core.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

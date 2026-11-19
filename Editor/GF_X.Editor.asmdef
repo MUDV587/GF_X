@@ -1,0 +1,41 @@
+﻿{
+    "name": "GF_X.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GF_X.Runtime",
+        "GameFramework",
+        "UnityGameFramework.Runtime",
+        "UnityGameFramework.Editor",
+        "HybridCLR.Editor",
+        "HybridCLR.Runtime",
+        "Obfuz.Runtime",
+        "Obfuz.Editor",
+        "Obfuz4HybridCLR.Editor",
+        "UniTask",
+        "ZString",
+        "Unity.TextMeshPro",
+        "Unity.TextMeshPro.Editor",
+        "Unity.2D.Sprite.Editor",
+        "Unity.Mathematics",
+        "DOTween.Extension",
+        "GF.Core.Editor",
+        "GF.LanguageExcel.Editor",
+        "GF.DataTable.Editor",
+        "GF.GameData.Editor",
+        "GF.Localization.Editor",
+        "GF.Compression.Editor",
+        "GF.ImageFont.Editor",
+        "GF.Build.Editor"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
