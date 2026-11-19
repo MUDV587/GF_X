@@ -39,22 +39,20 @@ public class GF_X : MonoBehaviour
         {
             Instance = this;
             GFUtility.Log($"[Bootstrap] AppSettings.ResourceMode={AppSettings.Instance.ResourceMode}");
+            // 通过 UGF 公开 API（SetResourceModePreInit）应用资源模式（替代反射 m_ResourceMode）。
+            // 必须在 ResourceComponent.Start 消费该字段之前写入，见 UGF fork 补丁 #14。
+            var resCom = GameEntry.GetComponent<ResourceComponent>();
+            if (resCom != null)
+            {
+                resCom.SetResourceModePreInit(AppSettings.Instance.ResourceMode);
+                GFUtility.Log($"[Bootstrap] ResourceMode applied: {AppSettings.Instance.ResourceMode}");
+            }
         }
     }
 
     private void Start()
     {
         Log.Info("[Bootstrap] GF_X.Start: GameFramework log is ready.");
-        // 通过 UGF 公开 API 应用资源模式（替代反射 m_ResourceMode 的私有字段）。
-        // 注意：所有 UGF 组件 Awake（含 ResourceComponent 的 OnInit）都先于本方法执行，
-        // 此时 m_ResourceManager 已初始化，可以安全调用 SetResourceMode。
-        var resCom = GameEntry.GetComponent<ResourceComponent>();
-        if (resCom != null)
-        {
-            resCom.SetResourceMode(AppSettings.Instance.ResourceMode);
-            GFUtility.Log($"[Bootstrap] ResourceMode applied: {AppSettings.Instance.ResourceMode}");
-        }
-
         Base = GameEntry.GetComponent<BaseComponent>();
         Config = GameEntry.GetComponent<ConfigComponent>();
         DataNode = GameEntry.GetComponent<DataNodeComponent>();
